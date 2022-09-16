@@ -54,6 +54,7 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.Int32);
                 x.NotNullable(false);
             });
+            Table("offer");
         }
     }
 }

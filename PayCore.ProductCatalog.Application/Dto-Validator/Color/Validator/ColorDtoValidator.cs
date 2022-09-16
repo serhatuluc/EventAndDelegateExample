@@ -1,8 +1,7 @@
 ﻿
 using FluentValidation;
-using PayCore.ProductCatalog.Application.Dto;
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Color.Validator
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     class ColorDtoValidator:AbstractValidator<ColorUpsertDto>
     {

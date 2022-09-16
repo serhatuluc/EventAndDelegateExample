@@ -3,7 +3,7 @@ using NLog;
 using PayCore.ProductCatalog.Application.Interfaces.Log;
 using System;
 
-namespace PayCore.ProductCatalog.Infrastructure.LoggerManager
+namespace PayCore.ProductCatalog.Infrastructure
 {
     public class LoggerManager : ILoggerManager
     {

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Brand.Dto
+﻿
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     public class BrandViewDto
     {

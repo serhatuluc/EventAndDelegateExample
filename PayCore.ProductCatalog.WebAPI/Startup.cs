@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PayCore.ProductCatalog.Application.IOC;
+using PayCore.ProductCatalog.Infrastructure.IOC;
 using PayCore.ProductCatalog.Persistence.DependencyContainers;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,12 @@ namespace PayCore.ProductCatalog.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Dependecies of layers
+            services.AddApplicationServices(Configuration);
+            services.AddInfrastructureServices(Configuration);
             services.AddPersistenceServices(Configuration);
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

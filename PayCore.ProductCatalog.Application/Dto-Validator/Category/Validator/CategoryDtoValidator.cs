@@ -1,12 +1,7 @@
 ﻿using FluentValidation;
-using PayCore.ProductCatalog.Application.Dto_Validator.Category.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Category.Validator
+
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     class CategoryDtoValidator : AbstractValidator<CategoryUpsertDto>
     {

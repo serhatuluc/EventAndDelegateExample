@@ -1,6 +1,6 @@
 ﻿
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Color.Dto
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     public class ColorViewDto
     {

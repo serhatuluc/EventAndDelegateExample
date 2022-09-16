@@ -35,6 +35,7 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.String);
                 x.NotNullable(true);
             });
+            Table("color");
         }
     }
 }

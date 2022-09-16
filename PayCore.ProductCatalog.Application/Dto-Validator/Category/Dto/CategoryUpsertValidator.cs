@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Category.Dto
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     public class CategoryUpsertDto
     {

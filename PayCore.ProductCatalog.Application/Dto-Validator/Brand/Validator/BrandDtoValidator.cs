@@ -1,12 +1,7 @@
 ﻿using FluentValidation;
-using PayCore.ProductCatalog.Application.Dto_Validator.Brand.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Brand.Validator
+
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     public class BrandDtoValidator:AbstractValidator<BrandUpsertDto>
     {

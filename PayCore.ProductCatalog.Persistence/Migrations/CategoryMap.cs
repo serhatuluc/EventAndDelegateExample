@@ -2,15 +2,11 @@
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using PayCore.ProductCatalog.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PayCore.ProductCatalog.Persistence.Migrations
 {
-    class CategoryMap:ClassMapping<Category>
+    public class CategoryMap:ClassMapping<Category>
     {
         public CategoryMap()
         {
@@ -40,6 +36,7 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.String);
                 x.NotNullable(true);
             });
+            Table("category");
         }
     }
 }

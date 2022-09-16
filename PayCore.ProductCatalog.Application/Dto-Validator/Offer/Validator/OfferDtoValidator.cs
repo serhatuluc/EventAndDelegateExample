@@ -1,9 +1,8 @@
 ﻿
-
 using FluentValidation;
-using PayCore.ProductCatalog.Application.Dto_Validator.Offer.Dto;
 
-namespace PayCore.ProductCatalog.Application.Dto_Validator.Offer.Validator
+
+namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
     public class OfferDtoValidator:AbstractValidator<OfferUpsertDto>
     {

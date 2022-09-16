@@ -9,10 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\PayCore.ProductCatalog.Infrastructure\PayCore.ProductCatalog.Infrastructure.csproj" />
     <ProjectReference Include="..\PayCore.ProductCatalog.Persistence\PayCore.ProductCatalog.Persistence.csproj" />
   </ItemGroup>
 
