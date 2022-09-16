@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OnionArcExample.Application;
 using PayCore.ProductCatalog.Application.IOC;
 using PayCore.ProductCatalog.Infrastructure.IOC;
 using PayCore.ProductCatalog.Persistence.DependencyContainers;
@@ -51,6 +52,8 @@ namespace PayCore.ProductCatalog.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PayCore.ProductCatalog.WebAPI v1"));
             }
+            // middleware
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,14 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         {
 
             var result = await brandService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> Create([FromBody] BrandUpsertDto dto)
+        {
+            var result = await brandService.Insert(dto);
+         
             return Ok(result);
         }
     }

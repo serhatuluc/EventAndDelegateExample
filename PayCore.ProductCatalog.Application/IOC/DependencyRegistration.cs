@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
@@ -13,6 +14,7 @@ namespace PayCore.ProductCatalog.Application.IOC
     {
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             // services 

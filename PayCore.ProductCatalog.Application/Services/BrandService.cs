@@ -33,9 +33,11 @@ namespace PayCore.ProductCatalog.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<BrandUpsertDto> Insert(BrandUpsertDto dto)
+        public async Task<BrandUpsertDto> Insert(BrandUpsertDto dto)
         {
-            throw new NotImplementedException();
+            var tempEntity = mapper.Map<BrandUpsertDto, Brand>(dto);
+            await brandRepository.Create(tempEntity);
+            return dto;
         }
 
         public Task Remove(int id)
