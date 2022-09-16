@@ -57,10 +57,6 @@ namespace OnionArcExample.Application
                     statusCode = HttpStatusCode.BadRequest;
                     errorDetails.ErrorType = "Bad Request";
                     break;
-                case InvalidOperationException e:
-                    statusCode = HttpStatusCode.BadRequest;
-                    errorDetails.ErrorType = "BadRequest";
-                    break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     errorDetails.ErrorType = "Internal Server Error";

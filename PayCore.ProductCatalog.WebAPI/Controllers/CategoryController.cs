@@ -16,7 +16,7 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             this.categoryService = categoryService;
         }
 
-        [HttpGet("getbrands")]
+        [HttpGet("getcategories")]
         public virtual async Task<IActionResult> GetAll()
         {
             //Fetching objects using service
@@ -24,7 +24,7 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getbrandbyid")]
+        [HttpGet("getcategorybyid")]
         public virtual async Task<IActionResult> GetById(int id)
         {
             //Fetching object using service
@@ -32,21 +32,21 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("createbrand")]
+        [HttpPost("createcategory")]
         public virtual async Task<IActionResult> Create([FromBody] CategoryUpsertDto dto)
         {
             await categoryService.Insert(dto);
             return Ok();
         }
 
-        [HttpPut("updatebrand")]
+        [HttpPut("updatecategory")]
         public virtual async Task<IActionResult> Update(int id, [FromBody] CategoryUpsertDto dto)
         {
             await categoryService.Update(id, dto);
             return Ok();
         }
 
-        [HttpDelete("deletebrand")]
+        [HttpDelete("deletecategory")]
         public virtual async Task<IActionResult> Delete(int id)
         {
             await categoryService.Remove(id);

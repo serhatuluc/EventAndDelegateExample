@@ -16,7 +16,7 @@ namespace PayCore.ProductCatalog.Application.Services
         protected readonly IUnitOfWork _unitOfWork;
 
 
-        public CategoryService(IMapper mapper, ICategoryRepository brandRepository, IUnitOfWork unitOfWork) : base()
+        public CategoryService(IMapper mapper,IUnitOfWork unitOfWork) : base()
         {
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
@@ -46,10 +46,10 @@ namespace PayCore.ProductCatalog.Application.Services
         }
 
         //Insert
-        public async Task Insert(BrandUpsertDto dto)
+        public async Task Insert(CategoryUpsertDto dto)
         {
-            var tempEntity = _mapper.Map<BrandUpsertDto, Brand>(dto);
-            await _unitOfWork.Brand.Create(tempEntity);
+            var tempEntity = _mapper.Map<CategoryUpsertDto, Category>(dto);
+            await _unitOfWork.Category.Create(tempEntity);
         }
 
         //Remove
@@ -63,19 +63,21 @@ namespace PayCore.ProductCatalog.Application.Services
             }
 
             //IsDeleted field of brand is updated to delete. 
-            //Assuming product might have used this brand id. The brand is not delted from database 
+            //Assuming product might have used this brand id. The brand is not deleted from database 
             entity.IsDeleted = true;
             await _unitOfWork.Category.Update(entity);
         }
 
         //Update
-        public async Task Update(int id, BrandUpsertDto dto)
+        public async Task Update(int id, CategoryUpsertDto dto)
         {
             var tempentity = await _unitOfWork.Category.GetById(id);
             if (tempentity is null)
             {
                 throw new NotFoundException(nameof(Category), id);
             }
+            if (dto.CategoryName is not null)
+                tempentity.CategoryName = dto.CategoryName;
             await _unitOfWork.Category.Update(tempentity);
         }
 

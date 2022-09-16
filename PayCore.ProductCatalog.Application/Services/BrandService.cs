@@ -16,7 +16,7 @@ namespace PayCore.ProductCatalog.Application.Services
         protected readonly IUnitOfWork unitOfWork ;
 
 
-        public BrandService(IMapper mapper, IBrandRepository brandRepository, IUnitOfWork unitOfWork) : base()
+        public BrandService(IMapper mapper, IUnitOfWork unitOfWork) : base()
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
@@ -76,6 +76,9 @@ namespace PayCore.ProductCatalog.Application.Services
             {
                 throw new NotFoundException(nameof(Brand), id);
             }
+            if (dto.BrandName is not null)
+                tempentity.BrandName = dto.BrandName;
+
             await unitOfWork.Brand.Update(tempentity);
         }
 
