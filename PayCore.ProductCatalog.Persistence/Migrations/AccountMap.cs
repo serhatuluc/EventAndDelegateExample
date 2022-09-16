@@ -12,10 +12,10 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
         {
             Id(x => x.Id, x =>
             {
-                x.Type(NHibernateUtil.Int32);
+                x.Type(NHibernateUtil.Guid);
                 x.Column("Id");
-                x.UnsavedValue(0);
-                x.Generator(Generators.Increment);
+                //x.UnsavedValue(0);
+                x.Generator(Generators.GuidComb);
             });
 
             Property(b => b.Name, x =>

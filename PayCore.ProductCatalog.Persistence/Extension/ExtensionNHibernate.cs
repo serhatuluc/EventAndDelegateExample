@@ -25,7 +25,7 @@ namespace PayCore.ProductCatalog.Persistence.Extension
             var configuration = new Configuration();
             configuration.DataBaseIntegration(c =>
             {
-                c.Dialect<PostgreSQLDialect>(); 
+                c.Dialect<PostgreSQL82Dialect>(); 
                 c.ConnectionString = connectionString;
                 c.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
                 c.SchemaAction = SchemaAutoAction.Update;
