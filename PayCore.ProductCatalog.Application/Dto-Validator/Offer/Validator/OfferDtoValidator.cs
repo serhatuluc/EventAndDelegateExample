@@ -9,7 +9,8 @@ namespace PayCore.ProductCatalog.Application.Dto_Validator.Offer.Validator
     {
         public OfferDtoValidator()
         {
-            //RuleFor(x=>x.OfferedPrice).
+            RuleFor(x => x.OfferedPrice).GreaterThan(0);
+            RuleFor(x => x.ProductId).GreaterThan(0);
         }
     }
 }
