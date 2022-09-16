@@ -19,6 +19,7 @@ namespace PayCore.ProductCatalog.Application.IOC
 
             // services 
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<ICategoryService, CategoryService>();
            
 
             // mapper

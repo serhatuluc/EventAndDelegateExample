@@ -8,9 +8,9 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
     {
         Task<IEnumerable<BrandViewDto>> GetAll();
         Task<BrandViewDto> GetById(int id);
-        Task<BrandUpsertDto> Insert(BrandUpsertDto dto);
+        Task Insert(BrandUpsertDto dto);
         Task Remove(int id);
-        Task<BrandUpsertDto> Update(int id, BrandUpsertDto dto);
+        Task Update(int id, BrandUpsertDto dto);
     }
     
 }

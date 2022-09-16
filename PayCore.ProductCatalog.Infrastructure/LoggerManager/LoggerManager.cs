@@ -17,6 +17,7 @@ namespace PayCore.ProductCatalog.Infrastructure
         {
             logger.Error(ex,message);
         }
+
         public void LogInfo(Exception ex,string message)
         {
             logger.Info(ex,message);

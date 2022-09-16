@@ -9,7 +9,7 @@ namespace PayCore.ProductCatalog.Infrastructure.IOC
     {
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddScoped<ILoggerManager,LoggerManager>();
+            services.AddSingleton<ILoggerManager,LoggerManager>();
         }
     }
 }

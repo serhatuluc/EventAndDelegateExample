@@ -5,16 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OnionArcExample.Application;
+using PayCore.ProductCatalog.Application.Interfaces.Log;
 using PayCore.ProductCatalog.Application.IOC;
+using PayCore.ProductCatalog.Infrastructure;
 using PayCore.ProductCatalog.Infrastructure.IOC;
 using PayCore.ProductCatalog.Persistence.DependencyContainers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace PayCore.ProductCatalog.WebAPI
 {
@@ -35,7 +33,8 @@ namespace PayCore.ProductCatalog.WebAPI
             services.AddInfrastructureServices(Configuration);
             services.AddPersistenceServices(Configuration);
 
-
+ 
+            services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -52,8 +51,9 @@ namespace PayCore.ProductCatalog.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PayCore.ProductCatalog.WebAPI v1"));
             }
-            // middleware
+            // Exception middleware
             app.UseMiddleware<ExceptionMiddleware>();
+            
 
             app.UseHttpsRedirection();
 

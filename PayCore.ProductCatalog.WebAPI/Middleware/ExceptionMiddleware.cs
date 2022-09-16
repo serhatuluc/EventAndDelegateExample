@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PayCore.ProductCatalog.Application;
+using PayCore.ProductCatalog.Application.Interfaces.Log;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ namespace OnionArcExample.Application
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly ILoggerManager _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, ILoggerManager logger)
         {
             this._next = next;
             this._logger = logger;
@@ -46,7 +47,7 @@ namespace OnionArcExample.Application
             {
                 case CredentialException credentialException:
                     statusCode = HttpStatusCode.Unauthorized;
-                    errorDetails.ErrorType = "Not Found";
+                    errorDetails.ErrorType = "UnAuthorized";
                     break;
                 case NotFoundException notFoundException:
                     statusCode = HttpStatusCode.NotFound;
@@ -56,7 +57,13 @@ namespace OnionArcExample.Application
                     statusCode = HttpStatusCode.BadRequest;
                     errorDetails.ErrorType = "Bad Request";
                     break;
+                case InvalidOperationException e:
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorDetails.ErrorType = "BadRequest";
+                    break;
                 default:
+                    statusCode = HttpStatusCode.InternalServerError;
+                    errorDetails.ErrorType = "Internal Server Error";
                     break;
             }
 

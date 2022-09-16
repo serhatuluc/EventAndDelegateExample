@@ -1,29 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class BrandController:ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly IBrandService brandService;
+        private readonly ICategoryService categoryService;
 
-        public BrandController(IBrandService brandService)
+        public CategoryController(ICategoryService categoryService)
         {
-            this.brandService = brandService;
+            this.categoryService = categoryService;
         }
 
         [HttpGet("getbrands")]
         public virtual async Task<IActionResult> GetAll()
         {
             //Fetching objects using service
-            var result = await brandService.GetAll();
+            var result = await categoryService.GetAll();
             return Ok(result);
         }
 
@@ -31,28 +28,28 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         public virtual async Task<IActionResult> GetById(int id)
         {
             //Fetching object using service
-            var result = await brandService.GetById(id);
+            var result = await categoryService.GetById(id);
             return Ok(result);
         }
 
         [HttpPost("createbrand")]
-        public virtual async Task<IActionResult> Create([FromBody] BrandUpsertDto dto)
+        public virtual async Task<IActionResult> Create([FromBody] CategoryUpsertDto dto)
         {
-            await brandService.Insert(dto);
+            await categoryService.Insert(dto);
             return Ok();
         }
 
         [HttpPut("updatebrand")]
-        public virtual async Task<IActionResult> Update(int id,[FromBody] BrandUpsertDto dto)
+        public virtual async Task<IActionResult> Update(int id, [FromBody] CategoryUpsertDto dto)
         {
-            await brandService.Update(id,dto);
+            await categoryService.Update(id, dto);
             return Ok();
         }
 
         [HttpDelete("deletebrand")]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            await brandService.Remove(id);
+            await categoryService.Remove(id);
             return Ok();
         }
     }

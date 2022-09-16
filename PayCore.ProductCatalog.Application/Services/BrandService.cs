@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using PayCore.ProductCatalog.Application.Dto_Validator;
+using PayCore.ProductCatalog.Application.Interfaces.Log;
 using PayCore.ProductCatalog.Application.Interfaces.Repositories;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
+using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,42 +13,71 @@ namespace PayCore.ProductCatalog.Application.Services
     public class BrandService : IBrandService
     {
         protected readonly IMapper mapper;
-        protected readonly IBrandRepository brandRepository;
+        protected readonly IUnitOfWork unitOfWork ;
 
 
-        public BrandService(IMapper mapper, IBrandRepository brandRepository) : base()
+        public BrandService(IMapper mapper, IBrandRepository brandRepository, IUnitOfWork unitOfWork) : base()
         {
             this.mapper = mapper;
-            this.brandRepository = brandRepository;
+            this.unitOfWork = unitOfWork;
 
         }
+
+        //GetAll
         public async Task<IEnumerable<BrandViewDto>> GetAll()
         {
-            var tempEntity = await brandRepository.GetAll();
+            var tempEntity = await unitOfWork.Brand.GetAll();
             var result = mapper.Map<IEnumerable<Brand>, IEnumerable<BrandViewDto>>(tempEntity);
             return result;
         }
 
-        public Task<BrandViewDto> GetById(int id)
+        //GetById
+        public async Task<BrandViewDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var entity = await unitOfWork.Brand.GetById(id);
+
+            if(entity is null)
+            {
+                throw new NotFoundException(nameof(Brand), id);
+            }
+
+            var result = mapper.Map<Brand, BrandViewDto>(entity);
+            return result;
         }
 
-        public async Task<BrandUpsertDto> Insert(BrandUpsertDto dto)
+        //Insert
+        public async Task Insert(BrandUpsertDto dto)
         {
             var tempEntity = mapper.Map<BrandUpsertDto, Brand>(dto);
-            await brandRepository.Create(tempEntity);
-            return dto;
+            await unitOfWork.Brand.Create(tempEntity);
         }
 
-        public Task Remove(int id)
+        //Remove
+        public async Task Remove(int id)
         {
-            throw new NotImplementedException();
+            var entity = await unitOfWork.Brand.GetById(id);
+
+            if(entity is null)
+            {
+                throw new NotFoundException(nameof(Brand),id);
+            }
+            
+            //IsDeleted field of brand is updated to delete. 
+            //Assuming product might have used this brand id. The brand is not delted from database 
+            entity.IsDeleted = true;
+            await unitOfWork.Brand.Update(entity);
         }
 
-        public Task<BrandUpsertDto> Update(int id, BrandUpsertDto dto)
+        //Update
+        public async Task Update(int id, BrandUpsertDto dto)
         {
-            throw new NotImplementedException();
+           var tempentity = await unitOfWork.Brand.GetById(id);
+           if(tempentity is null)
+            {
+                throw new NotFoundException(nameof(Brand), id);
+            }
+            await unitOfWork.Brand.Update(tempentity);
         }
+
     }
 }
