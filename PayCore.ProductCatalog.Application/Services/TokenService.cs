@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PayCore.ProductCatalog.Application.Interfaces;
-using PayCore.ProductCatalog.Application.Interfaces.Repositories;
+using PayCore.ProductCatalog.Application.Interfaces.Log;
+using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
 using PayCore.ProductCatalog.Domain.Jwt;
 using PayCore.ProductCatalog.Domain.Token;
@@ -17,13 +18,15 @@ namespace PayCore.ProductCatalog.Application
 
     public class TokenService : ITokenService
     {
-        protected readonly IAccountRepository accountRepository;
+        private readonly ILoggerManager Log;
+        protected readonly IUnitOfWork unitOfWork;
         private readonly JwtConfig jwtConfig;
 
-        public TokenService(IOptionsMonitor<JwtConfig> jwtConfig, IAccountRepository accountRepository)
+        public TokenService(IOptionsMonitor<JwtConfig> jwtConfig, IUnitOfWork unitOfWork, ILoggerManager Log)
         {
             this.jwtConfig = jwtConfig.CurrentValue;
-            this.accountRepository = accountRepository;
+            this.unitOfWork = unitOfWork;
+            this.Log = Log;
            
         }
 
@@ -31,19 +34,19 @@ namespace PayCore.ProductCatalog.Application
         {
             if (tokenRequest is null)
             {
-                throw new CredentialException("Please validate your informations that you provided");
+                throw new CredentialException("Please validate your informations that you provided.");
             }
 
-            var accounts = await accountRepository.GetAll(x => x.UserName.Equals(tokenRequest.UserName));
+            var accounts = await unitOfWork.Account.GetAll(x => x.UserName.Equals(tokenRequest.UserName));
             var account = accounts.FirstOrDefault();
             if (account is null)
             {
-                throw new CredentialException("Please validate your informations that you provided");
+                throw new CredentialException("Please validate your informations that you provided.");
             }
 
             if (!account.Password.Equals(tokenRequest.Password))
             {
-                throw new CredentialException("Please validate your informations that you provided");
+                throw new CredentialException("Please validate your informations that you provided.");
             }
 
             DateTime now = DateTime.UtcNow;
@@ -51,7 +54,7 @@ namespace PayCore.ProductCatalog.Application
 
             account.LastActivity = now;
 
-            await accountRepository.Update(account);
+            await unitOfWork.Account.Update(account);
 
             TokenResponse tokenResponse = new TokenResponse
             {

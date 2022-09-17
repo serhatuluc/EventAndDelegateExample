@@ -35,11 +35,10 @@ namespace PayCore.ProductCatalog.WebAPI
 
  
             services.AddSingleton<ILoggerManager, LoggerManager>();
+
+            services.AddCustomizeSwagger();
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PayCore.ProductCatalog.WebAPI", Version = "v1" });
-            });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +55,8 @@ namespace PayCore.ProductCatalog.WebAPI
             
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

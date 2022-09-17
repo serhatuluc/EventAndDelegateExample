@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PayCore.ProductCatalog.Application.Extension;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Mapping;
 using PayCore.ProductCatalog.Application.Services;
@@ -35,7 +36,13 @@ namespace PayCore.ProductCatalog.Application.IOC
             });
             services.AddSingleton(mapperConfig.CreateMapper());
 
-            
+            // Configure JWT Bearer
+            JwtConfig = Configuration.GetSection("JwtConfig").Get<JwtConfig>();
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            services.AddJwtBearerAuthentication();
+
+
         }
     }
 }
