@@ -17,7 +17,7 @@ namespace PayCore.ProductCatalog.Application.Services
         protected readonly IUnitOfWork _unitOfWork;
 
 
-        public ColorService(IMapper mapper, IUnitOfWork unitOfWork) : base()
+        public ColorService(IMapper mapper, IUnitOfWork unitOfWork) 
         {
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;

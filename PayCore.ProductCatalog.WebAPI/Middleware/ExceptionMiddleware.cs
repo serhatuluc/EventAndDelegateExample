@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PayCore.ProductCatalog.Application;
 using PayCore.ProductCatalog.Application.Interfaces.Log;

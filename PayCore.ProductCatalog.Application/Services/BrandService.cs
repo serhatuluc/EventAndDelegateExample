@@ -16,7 +16,7 @@ namespace PayCore.ProductCatalog.Application.Services
         protected readonly IUnitOfWork unitOfWork ;
 
 
-        public BrandService(IMapper mapper, IUnitOfWork unitOfWork) : base()
+        public BrandService(IMapper mapper, IUnitOfWork unitOfWork) 
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
