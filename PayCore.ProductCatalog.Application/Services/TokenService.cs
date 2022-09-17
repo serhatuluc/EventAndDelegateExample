@@ -43,8 +43,8 @@ namespace PayCore.ProductCatalog.Application
             {
                 throw new CredentialException("Please validate your informations that you provided.");
             }
-
-            if (!account.Password.Equals(tokenRequest.Password))
+            var password = tokenRequest.Password.GetMd5Hash();
+            if (!account.Password.Equals(password))
             {
                 throw new CredentialException("Please validate your informations that you provided.");
             }

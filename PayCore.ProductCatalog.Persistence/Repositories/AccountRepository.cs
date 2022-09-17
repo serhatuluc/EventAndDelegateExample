@@ -5,6 +5,7 @@ using PayCore.ProductCatalog.Application.Interfaces.Repositories;
 using PayCore.ProductCatalog.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace PayCore.ProductCatalog.Persistence.Repositories
 
         public async Task<IEnumerable<Account>> GetAll(Expression<Func<Account, bool>> expression = null)
         {
-            var listOfcontainers = await session.Query<Account>().ToListAsync();
+            var listOfcontainers = await session.Query<Account>().Where(expression).ToListAsync();
             return listOfcontainers;
         }
 
