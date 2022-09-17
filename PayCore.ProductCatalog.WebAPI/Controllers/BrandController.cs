@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
+using PayCore.ProductCatalog.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles =Role.Admin)]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class BrandController:ControllerBase

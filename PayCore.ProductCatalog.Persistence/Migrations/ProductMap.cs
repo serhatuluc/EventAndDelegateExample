@@ -18,17 +18,6 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Generator(Generators.Increment);
             });
 
-            Property(b => b.CreatedAt, x =>
-            {
-                x.Type(NHibernateUtil.DateTime);
-                x.NotNullable(true);
-            });
-
-            Property(x => x.IsDeleted, x =>
-            {
-                x.Type(NHibernateUtil.Boolean);
-            });
-
             Property(b => b.ProductName, x =>
             {
                 x.Length(100);

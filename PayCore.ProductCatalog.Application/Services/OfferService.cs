@@ -65,7 +65,6 @@ namespace PayCore.ProductCatalog.Application.Services
 
             //IsDeleted field of brand is updated to delete. 
             //Assuming product might have used this brand id. The brand is not deleted from database 
-            entity.IsDeleted = true;
             await _unitOfWork.Offer.Update(entity);
         }
 
