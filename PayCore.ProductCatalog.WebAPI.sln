@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCore.ProductCatalog.WebAPI", "PayCore.ProductCatalog.WebAPI\PayCore.ProductCatalog.WebAPI.csproj", "{662F62A8-2821-484D-AEB8-A0280560E9E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{86495D9E-18C0-4EB8-ADD0-6C2E9790705B} = {86495D9E-18C0-4EB8-ADD0-6C2E9790705B}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCore.ProductCatalog.Domain", "PayCore.ProductCatalog.Domain\PayCore.ProductCatalog.Domain.csproj", "{D221F1B2-0DE0-414E-9489-2B7E9770CD1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCore.ProductCatalog.Application", "PayCore.ProductCatalog.Application\PayCore.ProductCatalog.Application.csproj", "{86495D9E-18C0-4EB8-ADD0-6C2E9790705B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCore.ProductCatalog.Persistence", "PayCore.ProductCatalog.Persistence\PayCore.ProductCatalog.Persistence.csproj", "{3CC5E5BA-B049-47B1-BE6F-A30BDABF6257}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayCore.ProductCatalog.Infrastructure", "PayCore.ProductCatalog.Infrastructure\PayCore.ProductCatalog.Infrastructure.csproj", "{4DF8DC7E-EFA0-481C-92D7-5A332428D7AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{662F62A8-2821-484D-AEB8-A0280560E9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662F62A8-2821-484D-AEB8-A0280560E9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662F62A8-2821-484D-AEB8-A0280560E9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662F62A8-2821-484D-AEB8-A0280560E9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D221F1B2-0DE0-414E-9489-2B7E9770CD1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D221F1B2-0DE0-414E-9489-2B7E9770CD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D221F1B2-0DE0-414E-9489-2B7E9770CD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D221F1B2-0DE0-414E-9489-2B7E9770CD1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86495D9E-18C0-4EB8-ADD0-6C2E9790705B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86495D9E-18C0-4EB8-ADD0-6C2E9790705B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86495D9E-18C0-4EB8-ADD0-6C2E9790705B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86495D9E-18C0-4EB8-ADD0-6C2E9790705B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC5E5BA-B049-47B1-BE6F-A30BDABF6257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC5E5BA-B049-47B1-BE6F-A30BDABF6257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC5E5BA-B049-47B1-BE6F-A30BDABF6257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC5E5BA-B049-47B1-BE6F-A30BDABF6257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF8DC7E-EFA0-481C-92D7-5A332428D7AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF8DC7E-EFA0-481C-92D7-5A332428D7AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF8DC7E-EFA0-481C-92D7-5A332428D7AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF8DC7E-EFA0-481C-92D7-5A332428D7AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50121B95-6F79-445B-A002-F2B0E34A58A0}
+	EndGlobalSection
+EndGlobal
