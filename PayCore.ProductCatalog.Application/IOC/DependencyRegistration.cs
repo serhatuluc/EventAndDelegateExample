@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PayCore.ProductCatalog.Application.Extension;
+using PayCore.ProductCatalog.Application.Interfaces;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Mapping;
 using PayCore.ProductCatalog.Application.Services;
@@ -27,6 +28,7 @@ namespace PayCore.ProductCatalog.Application.IOC
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
            
 
             // mapper
