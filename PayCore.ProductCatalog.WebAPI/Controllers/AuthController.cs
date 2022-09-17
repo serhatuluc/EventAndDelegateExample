@@ -3,9 +3,6 @@ using PayCore.ProductCatalog.Application.Dto_Validator.Account.Dto;
 using PayCore.ProductCatalog.Application.Interfaces;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Domain.Token;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
