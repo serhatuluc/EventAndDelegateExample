@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using PayCore.ProductCatalog.Application.Common.Exceptions;
 using PayCore.ProductCatalog.Application.Dto_Validator;
-using PayCore.ProductCatalog.Application.Interfaces.Log;
-using PayCore.ProductCatalog.Application.Interfaces.Repositories;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -61,10 +61,15 @@ namespace PayCore.ProductCatalog.Application.Services
             {
                 throw new NotFoundException(nameof(Brand),id);
             }
+
+            //Custom exception is thrown if the object which is requested to be
+            //deleted has reference to other table
+            if(unitOfWork.Product.GetAll(x=>x.BrandId == id) is not null)
+            {
+                throw new InvalidRequestException(nameof(Product), id);
+            }
             
-            //IsDeleted field of brand is updated to delete. 
-            //Assuming product might have used this brand id. The brand is not delted from database 
-            await unitOfWork.Brand.Update(entity);
+            await unitOfWork.Brand.Delete(entity);
         }
 
         //Update

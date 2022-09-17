@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using PayCore.ProductCatalog.Application;
+using PayCore.ProductCatalog.Application.Common.Exceptions;
 using PayCore.ProductCatalog.Application.Interfaces.Log;
 using System;
 using System.Net;
@@ -53,6 +54,10 @@ namespace OnionArcExample.Application
                     errorDetails.ErrorType = "Not Found";
                     break;
                 case BadRequestException badRequestException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorDetails.ErrorType = "Bad Request";
+                    break;
+                case InvalidRequestException invalidRequestException:
                     statusCode = HttpStatusCode.BadRequest;
                     errorDetails.ErrorType = "Bad Request";
                     break;
