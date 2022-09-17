@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class OfferController : ControllerBase

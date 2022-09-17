@@ -17,9 +17,10 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         private readonly IAccountService accountService;
         private readonly ITokenService tokenService;
 
-        public AuthController(IAccountService accountService)
+        public AuthController(IAccountService accountService, ITokenService tokenService)
         {
             this.accountService = accountService;
+            this.tokenService = tokenService;
         }
 
         [HttpPost("Login")]

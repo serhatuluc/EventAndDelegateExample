@@ -47,11 +47,8 @@ namespace PayCore.ProductCatalog.Application.Services
         //Insert
         public async Task Insert(AccountUpsertDto dto)
         {
-            Random rand = new();
-            int salt = rand.Next();
-            string saltedPW = $"{dto.Password}{salt}";
             var tempEntity = mapper.Map<AccountUpsertDto, Account>(dto);
-            tempEntity.Password = saltedPW.GetMd5Hash();
+            tempEntity.Password = tempEntity.Password.GetMd5Hash();
             await unitOfWork.Account.Create(tempEntity);
         }
 
