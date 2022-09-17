@@ -1,9 +1,5 @@
 ﻿using PayCore.ProductCatalog.Application.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PayCore.ProductCatalog.Application.Interfaces.UnitOfWork
 {
@@ -14,5 +10,6 @@ namespace PayCore.ProductCatalog.Application.Interfaces.UnitOfWork
         IColorRepository Color { get; }
         IProductRepository Product { get; }
         IOfferRepository Offer { get; }
+        IAccountRepository Account { get; }
     }
 }

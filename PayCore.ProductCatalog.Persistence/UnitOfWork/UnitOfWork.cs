@@ -15,8 +15,9 @@ namespace PayCore.ProductCatalog.Persistence
         public IOfferRepository _Offer;
         public IColorRepository _Color;
         public IProductRepository _Product;
+        public IAccountRepository _Account;
 
-        public UnitOfWork(ISession session, ILoggerManager logger, ICategoryRepository _Category, IBrandRepository _Brand, IColorRepository _Color, IOfferRepository _Offer, IProductRepository _Product)
+        public UnitOfWork(ISession session, ILoggerManager logger, ICategoryRepository _Category, IBrandRepository _Brand, IColorRepository _Color, IOfferRepository _Offer, IProductRepository _Product,IAccountRepository _Account)
         {
             this.session = session;
             this.logger = logger;
@@ -25,6 +26,7 @@ namespace PayCore.ProductCatalog.Persistence
             this._Color = _Color;
             this._Offer = _Offer;
             this._Product = _Product;
+            this._Account = _Account;
 
         }
         public IBrandRepository Brand => _Brand ??= new BrandRepository(session,logger);
@@ -32,6 +34,7 @@ namespace PayCore.ProductCatalog.Persistence
         public IColorRepository Color => _Color ??= new ColorRepository(session,logger);
         public IOfferRepository Offer => _Offer ??= new OfferRepository(session,logger);
         public IProductRepository Product => _Product ??= new ProductRepository(session,logger);
+        public IAccountRepository Account => _Account ??= new AccountRepository(session,logger);
 
     }
 }

@@ -16,6 +16,7 @@ namespace PayCore.ProductCatalog.Persistence.DependencyContainers
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IOfferRepository, OfferRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // hibernate

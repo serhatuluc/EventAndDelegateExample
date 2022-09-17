@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PayCore.ProductCatalog.Application.Dto_Validator;
+using PayCore.ProductCatalog.Application.Dto_Validator.Account.Dto;
 using PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto;
 using PayCore.ProductCatalog.Domain.Entities;
 
@@ -21,7 +22,6 @@ namespace PayCore.ProductCatalog.Application.Mapping
             CreateMap<Color, ColorViewDto>().ReverseMap();
             CreateMap<Color, ColorUpsertDto>().ReverseMap();
 
-
             //Product
             CreateMap<Product, ProductViewDto>().ReverseMap();
             CreateMap<Product, ProductUpsertDto>().ReverseMap();
@@ -29,6 +29,10 @@ namespace PayCore.ProductCatalog.Application.Mapping
             //Offer
             CreateMap<Offer, OfferViewDto>().ReverseMap();
             CreateMap<Offer, OfferUpsertDto>().ReverseMap();
+
+            //Account
+            CreateMap<Account, AccountViewDto>().ReverseMap();
+            CreateMap<Account, AccountUpsertDto>().ReverseMap();
         }
     }
 }

@@ -25,6 +25,7 @@ namespace PayCore.ProductCatalog.Application.IOC
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAccountService, AccountService>();
            
 
             // mapper
