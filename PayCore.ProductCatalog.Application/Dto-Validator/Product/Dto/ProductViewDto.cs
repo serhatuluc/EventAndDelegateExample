@@ -10,6 +10,5 @@ namespace PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto
         public int BrandId { get; set; }
         public int ColorId { get; set; }
         public double Price { get; set; }
-        public string Image { get; set; }
     }
 }

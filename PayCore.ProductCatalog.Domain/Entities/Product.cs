@@ -19,7 +19,6 @@ namespace PayCore.ProductCatalog.Domain.Entities
         public virtual Account Account { get; set; }
         public virtual int AccountId { get; set; }
         public virtual int Price { get; set; }
-        public virtual string Image { get; set; }
         public virtual IList<Offer> Offers { get; set; }
     }
 }

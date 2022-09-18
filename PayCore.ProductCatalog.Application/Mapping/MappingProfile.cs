@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PayCore.ProducCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Dto_Validator.Account.Dto;
 using PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto;

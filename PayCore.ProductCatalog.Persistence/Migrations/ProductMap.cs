@@ -45,13 +45,6 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
 
             });
 
-            Property(b => b.Image, x =>
-            {
-                x.Length(500);
-                x.Type(NHibernateUtil.String);
-                x.NotNullable(true);
-            });
-
             Property(b => b.Price, x =>
             {
                 x.Type(NHibernateUtil.Int32);

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using PayCore.ProductCatalog.Application.Common.Exceptions;
+using PayCore.ProducCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,11 +22,39 @@ namespace PayCore.ProductCatalog.Application.Services
 
         }
 
-        public async Task<IEnumerable<Offer>> GetOffersofUser(int userId)
+
+        //GetAll
+        public async Task<List<OfferViewDto>> GetOffersofUser(int userId)
         {
+            var account = await _unitOfWork.Account.GetById(userId);
             //Fetch all the offers with id of user
-            return await _unitOfWork.Offer.GetAll(x=>x.AccountId==userId);
+            var listOffer = await _unitOfWork.Offer.GetAll(x => x.Account == account );
+
+            //İnitiating a list for offer view to be inserted
+            var result = new List<OfferViewDto>();
+
+            //Looping through offers that is fetched from database 
+            using (var sequenceEnum = listOffer.GetEnumerator())
+            {
+                while (sequenceEnum.MoveNext())
+                {
+                    //Mapping to view model 
+                    //Automapper is not preferred to be used here. Since this kind of mapping needs to be more distinct
+                    var view = new OfferViewDto()
+                    {
+                       Id = sequenceEnum.Current.Id,
+                       OfferedPrice = sequenceEnum.Current.OfferedPrice,
+                       ProductId =  sequenceEnum.Current.Product.Id,
+                       ProductName =  sequenceEnum.Current.Product.ProductName,
+                       IsApproved = sequenceEnum.Current.IsApproved,
+                    };
+                    result.Add(view);
+                }
+            }
+            return result;
         }
+
+
 
         //Insert
         public async Task OfferOnProduct(int userId,OfferUpsertDto dto)
@@ -50,6 +77,7 @@ namespace PayCore.ProductCatalog.Application.Services
             await _unitOfWork.Offer.Create(tempEntity);
         }
 
+        //Update
         public async Task UpdateOffer(int userId,int offerId, OfferUpsertDto dto)
         {
             var tempentity = await _unitOfWork.Offer.GetById(userId);
@@ -57,6 +85,7 @@ namespace PayCore.ProductCatalog.Application.Services
             {
                 throw new NotFoundException(nameof(Offer), userId);
             }
+            //Offered price is updated
             if (dto.OfferedPrice != tempentity.OfferedPrice)
                 tempentity.OfferedPrice = dto.OfferedPrice;
             await _unitOfWork.Offer.Update(tempentity);
@@ -68,11 +97,12 @@ namespace PayCore.ProductCatalog.Application.Services
             //Fetch the offer
             var entity = await _unitOfWork.Offer.GetById(offerId);
 
+            //If user tries to use offer doesnt to belong to him/her
             if(entity.AccountId != UserId)
             {
                 throw new BadRequestException("Offer could not be found");
             }
-
+            //If it is null throw exception
             if (entity is null)
             {
                 throw new NotFoundException(nameof(Offer), offerId);

@@ -1,4 +1,5 @@
-﻿using PayCore.ProductCatalog.Application.Dto_Validator;
+﻿using PayCore.ProducCatalog.Application.Dto_Validator;
+using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task UpdateOffer(int userID,int id, OfferUpsertDto dto);
 
         //Get offers which has id of user
-        Task<IEnumerable<Offer>> GetOffersofUser(int userId);
+        Task<List<OfferViewDto>> GetOffersofUser(int userId);
 
         //Get offers by id of offer
         //Task<OfferViewDto> GetOffersByID(int id);
