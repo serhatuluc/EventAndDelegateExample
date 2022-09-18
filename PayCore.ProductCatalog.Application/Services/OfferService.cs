@@ -32,11 +32,18 @@ namespace PayCore.ProductCatalog.Application.Services
             //It selects the offer to be approved
             var offer = offers.Where(x=>x.Id == id).FirstOrDefault();
 
+            if (offer is null)
+            {
+                throw new NotFoundException(nameof(Offer), id);
+            }
+
             //offer is approved
             offer.IsApproved = true;
-            _unitOfWork.Offer.Update(offer);
+            await _unitOfWork.Offer.Update(offer);
 
         }
+
+       
 
         public async Task DisapproveOffer(int id, int userId)
         {
@@ -46,11 +53,15 @@ namespace PayCore.ProductCatalog.Application.Services
             //It selects the offer to be approved
             var offer = offers.Where(x => x.Id == id).FirstOrDefault();
 
+            if(offer is null)
+            {
+                throw new NotFoundException(nameof(Offer), id);
+            }
             //offer is approved
             offer.IsApproved = false;
 
             //update
-            _unitOfWork.Offer.Update(offer);
+            await _unitOfWork.Offer.Update(offer);
         }
 
 
@@ -122,6 +133,7 @@ namespace PayCore.ProductCatalog.Application.Services
                             CategoryName = sequenceEnum.Current.Product.Category.CategoryName,
                             ColorName = sequenceEnum.Current.Product.Color.ColorName,
                             BrandName = sequenceEnum.Current.Product.Brand.BrandName,
+                            IsSold = sequenceEnum.Current.Product.IsSold,
                         }
                     };
                     result.Add(offerView);
@@ -192,5 +204,10 @@ namespace PayCore.ProductCatalog.Application.Services
             await _unitOfWork.Offer.Delete(entity);
         }
 
+
+        public Task BuyProductWithoutOffer(int offerId, int userId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

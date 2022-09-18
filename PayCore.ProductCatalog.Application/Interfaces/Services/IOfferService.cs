@@ -15,19 +15,23 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task WithDrawOffer(int userId, int offerId);
 
         //Updating the offer which user made
-        Task UpdateOffer(int userID,int id, OfferUpsertDto dto);
+        Task UpdateOffer(int userID,int offerId, OfferUpsertDto dto);
 
         //Get offers which has id of user
         Task<List<OfferViewDto>> GetOffersofUser(int userId);
 
         //Disapprove offer
-        Task DisapproveOffer(int id,int userId);
+        Task DisapproveOffer(int offerId,int userId);
 
         //Approve offer
-        Task ApproveOffer(int id, int userId);
+        Task ApproveOffer(int offerId, int userId);
 
         //Get offers has been made to product belongs to user
         Task<IList<OfferViewDto>> GetOffersToUser(int userId);
+
+        //Buy without offering
+        Task BuyProductWithoutOffer(int offerId, int userId);
+
 
     }
 }
