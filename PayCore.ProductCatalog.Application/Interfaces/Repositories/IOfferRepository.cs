@@ -9,5 +9,6 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Repositories
 {
     public interface IOfferRepository:IGenericRepository<Offer>
     {
+        Task<IList<Offer>> GetOfferOfUser(int userId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PayCore.ProducCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Dto_Validator;
+using PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
@@ -26,9 +27,8 @@ namespace PayCore.ProductCatalog.Application.Services
         //GetAll
         public async Task<List<OfferViewDto>> GetOffersofUser(int userId)
         {
-            var account = await _unitOfWork.Account.GetById(userId);
             //Fetch all the offers with id of user
-            var listOffer = await _unitOfWork.Offer.GetAll(x => x.Account == account );
+            var listOffer = await _unitOfWork.Offer.GetOfferOfUser(userId);
 
             //İnitiating a list for offer view to be inserted
             var result = new List<OfferViewDto>();
@@ -40,15 +40,22 @@ namespace PayCore.ProductCatalog.Application.Services
                 {
                     //Mapping to view model 
                     //Automapper is not preferred to be used here. Since this kind of mapping needs to be more distinct
-                    var view = new OfferViewDto()
+                    var offerView = new OfferViewDto()
                     {
                        Id = sequenceEnum.Current.Id,
                        OfferedPrice = sequenceEnum.Current.OfferedPrice,
-                       ProductId =  sequenceEnum.Current.Product.Id,
-                       ProductName =  sequenceEnum.Current.Product.ProductName,
                        IsApproved = sequenceEnum.Current.IsApproved,
+                       Product =  new ProductViewDto() { 
+                                Id = sequenceEnum.Current.Product.Id,
+                                ProductName = sequenceEnum.Current.Product.ProductName,
+                                Description = sequenceEnum.Current.Product.Description,
+                                Price = sequenceEnum.Current.Product.Price,
+                                CategoryName = sequenceEnum.Current.Product.Category.CategoryName,
+                                ColorName = sequenceEnum.Current.Product.Color.ColorName,
+                                BrandName = sequenceEnum.Current.Product.Brand.BrandName,
+                                    }
                     };
-                    result.Add(view);
+                    result.Add(offerView);
                 }
             }
             return result;
@@ -77,6 +84,8 @@ namespace PayCore.ProductCatalog.Application.Services
             await _unitOfWork.Offer.Create(tempEntity);
         }
 
+
+
         //Update
         public async Task UpdateOffer(int userId,int offerId, OfferUpsertDto dto)
         {
@@ -90,6 +99,8 @@ namespace PayCore.ProductCatalog.Application.Services
                 tempentity.OfferedPrice = dto.OfferedPrice;
             await _unitOfWork.Offer.Update(tempentity);
         }
+
+
 
         //Remove
         public async Task WithDrawOffer(int UserId, int offerId)
