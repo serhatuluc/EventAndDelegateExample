@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -37,12 +34,13 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         //    return Ok(result);
         //}
 
-        //[HttpPost("createoffer")]
-        //public virtual async Task<IActionResult> Create([FromBody] OfferUpsertDto dto)
-        //{
-        //    await offerService.Insert(dto);
-        //    return Ok();
-        //}
+        [HttpPost("createoffer")]
+        public virtual async Task<IActionResult> Create([FromBody] OfferUpsertDto dto)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await offerService.OfferOnProduct(accountId,dto);
+            return Ok();
+        }
 
         //[HttpPut("updateoffer")]
         //public virtual async Task<IActionResult> Update(int id, [FromBody] OfferUpsertDto dto)

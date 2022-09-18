@@ -40,10 +40,10 @@ namespace PayCore.ProductCatalog.Application.Services
         //    return result;
         //}
 
-        public async Task<IEnumerable<Offer>> GetOffersForUser(int id)
+        public async Task<IEnumerable<Offer>> GetOffersForUser(int userId)
         {
             //Fetch all the offers with id of user
-            return await _unitOfWork.Offer.GetAll(x=>x.AccountId==id);
+            return await _unitOfWork.Offer.GetAll(x=>x.AccountId==userId);
         }
 
         //Insert
@@ -65,20 +65,24 @@ namespace PayCore.ProductCatalog.Application.Services
             await _unitOfWork.Offer.Create(tempEntity);
         }
 
-        ////Remove
-        //public async Task Remove(int id)
-        //{
-        //    var entity = await _unitOfWork.Offer.GetById(id);
+        //Remove
+        public async Task WithDrawOffer(int UserId, int offerId)
+        {
+            //Fetch the offer
+            var entity = await _unitOfWork.Offer.GetById(offerId);
 
-        //    if (entity is null)
-        //    {
-        //        throw new NotFoundException(nameof(Offer), id);
-        //    }
+            if(entity.AccountId != UserId)
+            {
+                throw new BadRequestException("Offer could not be found");
+            }
 
-        //    //IsDeleted field of brand is updated to delete. 
-        //    //Assuming product might have used this brand id. The brand is not deleted from database 
-        //    await _unitOfWork.Offer.Update(entity);
-        //}
+            if (entity is null)
+            {
+                throw new NotFoundException(nameof(Offer), offerId);
+            }
+            //Delete it
+            await _unitOfWork.Offer.Delete(entity);
+        }
 
         ////Update
         //public async Task Update(int id, OfferUpsertDto dto)

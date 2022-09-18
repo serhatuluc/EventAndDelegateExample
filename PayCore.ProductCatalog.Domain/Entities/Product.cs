@@ -12,7 +12,7 @@ namespace PayCore.ProductCatalog.Domain.Entities
         public virtual int BrandId { get; set; }
         public virtual int ColorId { get; set; }
         public virtual int AccountId { get; set; }
-        public virtual double Price { get; set; }
+        public virtual int Price { get; set; }
         public virtual string Image { get; set; } 
     }
 }

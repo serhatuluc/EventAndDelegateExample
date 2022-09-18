@@ -15,13 +15,13 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task OfferOnProduct(int userId,OfferUpsertDto dto);
 
         //Withdraw the offer which user made
-        //Task WithDrawOffer(int id);
+        Task WithDrawOffer(int userId, int offerId);
 
         //Updating the offer which user made
        // Task UpdateOffer(int id, OfferUpsertDto dto);
 
         //Get offers which has id of user
-        Task<IEnumerable<Offer>> GetOffersForUser(int id);
+        Task<IEnumerable<Offer>> GetOffersForUser(int userId);
 
         //Get offers by id of offer
         //Task<OfferViewDto> GetOffersByID(int id);
