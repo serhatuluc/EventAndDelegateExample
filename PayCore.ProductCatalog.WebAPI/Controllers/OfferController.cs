@@ -20,10 +20,18 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         }
 
         [HttpGet("getoffersofuser")]
-        public virtual async Task<IActionResult> GetAll()
+        public virtual async Task<IActionResult> GetAllOffersOfUser()
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
             var result = await offerService.GetOffersofUser(accountId);
+            return Ok(result);
+        }
+
+        [HttpGet("getofferstouser")]
+        public virtual async Task<IActionResult> GetAllOfferstoUser()
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            var result = await offerService.GetOffersToUser(accountId);
             return Ok(result);
         }
 
@@ -49,6 +57,22 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
             await offerService.WithDrawOffer(accountId,offerId);
+            return Ok();
+        }
+
+        [HttpPut("approveoffer")]
+        public virtual async Task<IActionResult> ApproveOffer(int offerId)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await offerService.ApproveOffer(accountId, offerId);
+            return Ok();
+        }
+
+        [HttpPut("disapproveoffer")]
+        public virtual async Task<IActionResult> DisapproveOffer(int offerId)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await offerService.DisapproveOffer(accountId, offerId);
             return Ok();
         }
     }

@@ -6,6 +6,7 @@ using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.Application.Services
@@ -23,8 +24,37 @@ namespace PayCore.ProductCatalog.Application.Services
 
         }
 
+        public async Task ApproveOffer(int id, int userID)
+        {
+            //It fetches offers to user
+            var offers = await _unitOfWork.Offer.GetOfferstoUser(userID);
 
-        //GetAll
+            //It selects the offer to be approved
+            var offer = offers.Where(x=>x.Id == id).FirstOrDefault();
+
+            //offer is approved
+            offer.IsApproved = true;
+            _unitOfWork.Offer.Update(offer);
+
+        }
+
+        public async Task DisapproveOffer(int id, int userId)
+        {
+            //It fetches offers to user
+            var offers = await _unitOfWork.Offer.GetOfferstoUser(userId);
+
+            //It selects the offer to be approved
+            var offer = offers.Where(x => x.Id == id).FirstOrDefault();
+
+            //offer is approved
+            offer.IsApproved = false;
+
+            //update
+            _unitOfWork.Offer.Update(offer);
+        }
+
+
+        //Get Offers of user made it
         public async Task<List<OfferViewDto>> GetOffersofUser(int userId)
         {
             //Fetch all the offers with id of user
@@ -62,18 +92,58 @@ namespace PayCore.ProductCatalog.Application.Services
         }
 
 
+        //Get offers has been made to user
+        public async Task<IList<OfferViewDto>> GetOffersToUser(int userId)
+        {
+            //Fetch all the offers with id of user
+            var listOffer = await _unitOfWork.Offer.GetOfferstoUser(userId);
+
+            //İnitiating a list for offer view to be inserted
+            var result = new List<OfferViewDto>();
+
+            //Looping through offers that is fetched from database 
+            using (var sequenceEnum = listOffer.GetEnumerator())
+            {
+                while (sequenceEnum.MoveNext())
+                {
+                    //Mapping to view model 
+                    //Automapper is not preferred to be used here. Since this kind of mapping needs to be more distinct
+                    var offerView = new OfferViewDto()
+                    {
+                        Id = sequenceEnum.Current.Id,
+                        OfferedPrice = sequenceEnum.Current.OfferedPrice,
+                        IsApproved = sequenceEnum.Current.IsApproved,
+                        Product = new ProductViewDto()
+                        {
+                            Id = sequenceEnum.Current.Product.Id,
+                            ProductName = sequenceEnum.Current.Product.ProductName,
+                            Description = sequenceEnum.Current.Product.Description,
+                            Price = sequenceEnum.Current.Product.Price,
+                            CategoryName = sequenceEnum.Current.Product.Category.CategoryName,
+                            ColorName = sequenceEnum.Current.Product.Color.ColorName,
+                            BrandName = sequenceEnum.Current.Product.Brand.BrandName,
+                        }
+                    };
+                    result.Add(offerView);
+                }
+            }
+            return result;
+        }
+
+
 
         //Insert
         public async Task OfferOnProduct(int userId,OfferUpsertDto dto)
         {
             //To check if product is offerable
             var product = await _unitOfWork.Product.GetById(dto.ProductId);
-            if (product.IsOfferable == false)
+            if (product.IsOfferable == false || product.Account.Id == userId)
             {
                 throw new BadRequestException("Product is not offerable");
             }
             //Mapping dto to entity
             var tempEntity = _mapper.Map<OfferUpsertDto, Offer>(dto);
+
 
             //Assigning id of user to AccountId
             tempEntity.AccountId = userId;

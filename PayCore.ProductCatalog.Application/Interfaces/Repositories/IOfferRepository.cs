@@ -10,5 +10,6 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Repositories
     public interface IOfferRepository:IGenericRepository<Offer>
     {
         Task<IList<Offer>> GetOfferOfUser(int userId);
+        Task<IList<Offer>> GetOfferstoUser(int userId);
     }
 }

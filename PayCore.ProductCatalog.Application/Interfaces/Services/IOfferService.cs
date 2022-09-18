@@ -1,10 +1,6 @@
 ﻿using PayCore.ProducCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Dto_Validator;
-using PayCore.ProductCatalog.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.Application.Interfaces.Services
@@ -24,7 +20,14 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         //Get offers which has id of user
         Task<List<OfferViewDto>> GetOffersofUser(int userId);
 
-        //Get offers by id of offer
-        //Task<OfferViewDto> GetOffersByID(int id);
+        //Disapprove offer
+        Task DisapproveOffer(int id,int userId);
+
+        //Approve offer
+        Task ApproveOffer(int id, int userId);
+
+        //Get offers has been made to product belongs to user
+        Task<IList<OfferViewDto>> GetOffersToUser(int userId);
+
     }
 }

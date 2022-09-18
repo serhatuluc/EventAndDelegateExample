@@ -27,5 +27,11 @@ namespace PayCore.ProductCatalog.Persistence.Repositories
         {
            return await session.Query<Offer>().Where(x=>x.Account.Id == userId).ToListAsync();
         }
+
+        public async Task<IList<Offer>> GetOfferstoUser(int userID)
+        {
+            var result = await session.Query<Offer>().Where(x=>x.Product.Account.Id == userID).ToListAsync();
+            return result;
+        }
     }
 }
