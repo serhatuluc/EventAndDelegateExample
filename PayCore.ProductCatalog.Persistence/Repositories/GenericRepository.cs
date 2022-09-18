@@ -64,8 +64,13 @@ namespace PayCore.ProductCatalog.Persistence.Repositories
 
         public async Task<IEnumerable<Entity>> GetAll(Expression<Func<Entity, bool>> expression = null)
         {
-            var listOfcontainers = await session.Query<Entity>().Where(expression).ToListAsync();
-            return listOfcontainers;
+            if(expression is null)
+            {
+                return await session.Query<Entity>().ToListAsync();
+            }
+
+            return await session.Query<Entity>().Where(expression).ToListAsync();
+
         }
 
         public async Task<Entity> GetById(int id)

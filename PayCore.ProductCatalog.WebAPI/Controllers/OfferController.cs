@@ -34,7 +34,7 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         //    return Ok(result);
         //}
 
-        [HttpPost("createoffer")]
+        [HttpPost("offeronproduct")]
         public virtual async Task<IActionResult> Create([FromBody] OfferUpsertDto dto)
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
@@ -49,11 +49,12 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         //    return Ok();
         //}
 
-        //[HttpDelete("deleteoffer")]
-        //public virtual async Task<IActionResult> Delete(int id)
-        //{
-        //    await offerService.Remove(id);
-        //    return Ok();
-        //}
+        [HttpDelete("withdrawoffer")]
+        public virtual async Task<IActionResult> Delete(int offerId)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await offerService.WithDrawOffer(accountId,offerId);
+            return Ok();
+        }
     }
 }
