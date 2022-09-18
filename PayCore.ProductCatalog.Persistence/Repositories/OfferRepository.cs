@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Linq;
 using PayCore.ProductCatalog.Application.Interfaces.Log;
 using PayCore.ProductCatalog.Application.Interfaces.Repositories;
 using PayCore.ProductCatalog.Domain.Entities;
@@ -21,5 +22,6 @@ namespace PayCore.ProductCatalog.Persistence.Repositories
             this.session = session;
             this.Logger = Logger;
         }
+
     }
 }

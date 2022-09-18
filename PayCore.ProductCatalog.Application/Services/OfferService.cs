@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PayCore.ProductCatalog.Application.Common.Exceptions;
 using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
@@ -24,62 +25,73 @@ namespace PayCore.ProductCatalog.Application.Services
 
         }
 
-        //GetAll
-        public async Task<IEnumerable<OfferViewDto>> GetAll()
+
+        ////GetById
+        //public async Task<OfferViewDto> GetById(int id)
+        //{
+        //    var entity = await _unitOfWork.Offer.GetById(id);
+
+        //    if (entity is null)
+        //    {
+        //        throw new NotFoundException(nameof(Offer), id);
+        //    }
+
+        //    var result = _mapper.Map<Offer, OfferViewDto>(entity);
+        //    return result;
+        //}
+
+        public async Task<IEnumerable<Offer>> GetOffersForUser(int id)
         {
-            var tempEntity = await _unitOfWork.Offer.GetAll();
-            var result = _mapper.Map<IEnumerable<Offer>, IEnumerable<OfferViewDto>>(tempEntity);
-            return result;
-        }
-
-        //GetById
-        public async Task<OfferViewDto> GetById(int id)
-        {
-            var entity = await _unitOfWork.Offer.GetById(id);
-
-            if (entity is null)
-            {
-                throw new NotFoundException(nameof(Offer), id);
-            }
-
-            var result = _mapper.Map<Offer, OfferViewDto>(entity);
-            return result;
+            //Fetch all the offers with id of user
+            return await _unitOfWork.Offer.GetAll(x=>x.AccountId==id);
         }
 
         //Insert
-        public async Task Insert(OfferUpsertDto dto)
+        public async Task OfferOnProduct(int userId,OfferUpsertDto dto)
         {
+            //To check if product is offerable
+            var product = await _unitOfWork.Product.GetById(dto.ProductId);
+            if (product.IsOfferable == false)
+            {
+                throw new BadRequestException("Product is not offerable");
+            }
+            //Mapping dto to entity
             var tempEntity = _mapper.Map<OfferUpsertDto, Offer>(dto);
+
+            //Assigning id of user to AccountId
+            tempEntity.AccountId = userId;
+
+            //Creating the offer
             await _unitOfWork.Offer.Create(tempEntity);
         }
 
-        //Remove
-        public async Task Remove(int id)
-        {
-            var entity = await _unitOfWork.Offer.GetById(id);
+        ////Remove
+        //public async Task Remove(int id)
+        //{
+        //    var entity = await _unitOfWork.Offer.GetById(id);
 
-            if (entity is null)
-            {
-                throw new NotFoundException(nameof(Offer), id);
-            }
+        //    if (entity is null)
+        //    {
+        //        throw new NotFoundException(nameof(Offer), id);
+        //    }
 
-            //IsDeleted field of brand is updated to delete. 
-            //Assuming product might have used this brand id. The brand is not deleted from database 
-            await _unitOfWork.Offer.Update(entity);
-        }
+        //    //IsDeleted field of brand is updated to delete. 
+        //    //Assuming product might have used this brand id. The brand is not deleted from database 
+        //    await _unitOfWork.Offer.Update(entity);
+        //}
 
-        //Update
-        public async Task Update(int id, OfferUpsertDto dto)
-        {
-            var tempentity = await _unitOfWork.Offer.GetById(id);
-            if (tempentity is null)
-            {
-                throw new NotFoundException(nameof(Offer), id);
-            }
-            if (dto.OfferedPrice != tempentity.OfferedPrice)
-                tempentity.OfferedPrice = dto.OfferedPrice;
-            await _unitOfWork.Offer.Update(tempentity);
-        }
+        ////Update
+        //public async Task Update(int id, OfferUpsertDto dto)
+        //{
+        //    var tempentity = await _unitOfWork.Offer.GetById(id);
+        //    if (tempentity is null)
+        //    {
+        //        throw new NotFoundException(nameof(Offer), id);
+        //    }
+        //    if (dto.OfferedPrice != tempentity.OfferedPrice)
+        //        tempentity.OfferedPrice = dto.OfferedPrice;
+        //    await _unitOfWork.Offer.Update(tempentity);
+        //}
 
     }
 }

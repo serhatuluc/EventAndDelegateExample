@@ -38,7 +38,7 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.NotNullable(true);
 
             });
-            Property(x => x.UsingStatus, x =>
+            Property(x => x.IsOfferable, x =>
             {
                 x.Type(NHibernateUtil.Boolean);
                 x.NotNullable(true);
@@ -53,16 +53,29 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
             Property(x => x.ColorId, x =>
             {
                 x.Type(NHibernateUtil.Int32);
-                x.NotNullable(false);// Brand Id can be null
+                x.NotNullable(false);
             });
 
             Property(x => x.BrandId, x =>
             {
                 x.Type(NHibernateUtil.Int32);
-                x.NotNullable(false); // Brand Id can be null
+                x.NotNullable(false); 
             });
 
             Property(x => x.AccountId, x =>
+            {
+                x.Type(NHibernateUtil.Int32);
+                x.NotNullable(true);
+            });
+
+            Property(b => b.Image, x =>
+            {
+                x.Length(500);
+                x.Type(NHibernateUtil.String);
+                x.NotNullable(true);
+            });
+
+            Property(b => b.Price, x =>
             {
                 x.Type(NHibernateUtil.Int32);
                 x.NotNullable(true);

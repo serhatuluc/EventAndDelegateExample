@@ -47,6 +47,7 @@ namespace PayCore.ProductCatalog.Application.Services
         public async Task Insert(ProductUpsertDto dto)
         {
             var tempEntity = _mapper.Map<ProductUpsertDto, Product>(dto);
+            tempEntity.AccountId = 1;
             await _unitOfWork.Product.Create(tempEntity);
         }
 

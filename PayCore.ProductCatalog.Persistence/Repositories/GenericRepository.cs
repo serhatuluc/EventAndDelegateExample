@@ -33,6 +33,7 @@ namespace PayCore.ProductCatalog.Persistence.Repositories
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
+                var error = ex.Message;
                 Logger.LogError(ex,"Insert Error");
             }
             finally
