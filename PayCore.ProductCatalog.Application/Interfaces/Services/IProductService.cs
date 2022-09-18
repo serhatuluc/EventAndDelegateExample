@@ -11,7 +11,9 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
     {
         Task<IEnumerable<ProductViewDto>> GetAll();
         Task<ProductViewDto> GetById(int id);
-        Task Insert(ProductUpsertDto dto);
+
+        //Insert Product 
+        Task InsertProduct(int userId,ProductUpsertDto dto);
         Task Remove(int id);
         Task Update(int id, ProductUpsertDto dto);
     }

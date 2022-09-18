@@ -44,10 +44,28 @@ namespace PayCore.ProductCatalog.Application.Services
         }
 
         //Insert
-        public async Task Insert(ProductUpsertDto dto)
+        public async Task InsertProduct(int UserId,ProductUpsertDto dto)
         {
             var tempEntity = _mapper.Map<ProductUpsertDto, Product>(dto);
-            tempEntity.AccountId = 1;
+
+            tempEntity.Category = await _unitOfWork.Category.GetById(dto.CategoryId);
+            if (tempEntity.Category is null) 
+            {
+                throw new NotFoundException(nameof(Category), dto.CategoryId); 
+            }
+
+            tempEntity.Brand = await _unitOfWork.Brand.GetById(dto.BrandId);
+            if (tempEntity.Brand is null)
+            {
+                throw new NotFoundException(nameof(Category), dto.BrandId);
+            }
+            tempEntity.Color = await _unitOfWork.Color.GetById(dto.ColorId);
+            if (tempEntity.Color is null)
+            {
+                throw new NotFoundException(nameof(Category), dto.ColorId);
+            }
+
+            tempEntity.Account = await _unitOfWork.Account.GetById(UserId);
             await _unitOfWork.Product.Create(tempEntity);
         }
 

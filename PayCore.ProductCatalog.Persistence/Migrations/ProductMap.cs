@@ -45,29 +45,6 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
 
             });
 
-            Property(x => x.CategoryId, x =>
-            {
-                x.Type(NHibernateUtil.Int32);
-            });
-
-            Property(x => x.ColorId, x =>
-            {
-                x.Type(NHibernateUtil.Int32);
-                x.NotNullable(false);
-            });
-
-            Property(x => x.BrandId, x =>
-            {
-                x.Type(NHibernateUtil.Int32);
-                x.NotNullable(false); 
-            });
-
-            Property(x => x.AccountId, x =>
-            {
-                x.Type(NHibernateUtil.Int32);
-                x.NotNullable(true);
-            });
-
             Property(b => b.Image, x =>
             {
                 x.Length(500);
@@ -80,6 +57,18 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.Int32);
                 x.NotNullable(true);
             });
+
+
+            ManyToOne(product => product.Category, map => map.Column("CategoryId"));
+
+            ManyToOne(product => product.Color, map => map.Column("ColorId"));
+
+            ManyToOne(product => product.Brand, map => map.Column("BrandId"));
+
+            ManyToOne(product => product.Account, map => map.Column("AccountId"));
+
+            Bag(product => product.Offers, map => map.Key(k => k.Column("ProductId")), rel => rel.OneToMany());
+
             Table("product");
         }
     }

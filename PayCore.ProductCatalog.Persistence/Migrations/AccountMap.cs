@@ -59,6 +59,8 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.DateTime);
                 x.NotNullable(true);
             });
+            Bag(brand => brand.Products, map => map.Key(k => k.Column("AccountId")), rel => rel.OneToMany());
+            Bag(brand => brand.Offers, map => map.Key(k => k.Column("AccountId")), rel => rel.OneToMany());
 
             Table("account");
         }

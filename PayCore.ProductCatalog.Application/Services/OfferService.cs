@@ -6,8 +6,6 @@ using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.Application.Services
@@ -25,22 +23,7 @@ namespace PayCore.ProductCatalog.Application.Services
 
         }
 
-
-        ////GetById
-        //public async Task<OfferViewDto> GetById(int id)
-        //{
-        //    var entity = await _unitOfWork.Offer.GetById(id);
-
-        //    if (entity is null)
-        //    {
-        //        throw new NotFoundException(nameof(Offer), id);
-        //    }
-
-        //    var result = _mapper.Map<Offer, OfferViewDto>(entity);
-        //    return result;
-        //}
-
-        public async Task<IEnumerable<Offer>> GetOffersForUser(int userId)
+        public async Task<IEnumerable<Offer>> GetOffersofUser(int userId)
         {
             //Fetch all the offers with id of user
             return await _unitOfWork.Offer.GetAll(x=>x.AccountId==userId);
@@ -60,9 +43,23 @@ namespace PayCore.ProductCatalog.Application.Services
 
             //Assigning id of user to AccountId
             tempEntity.AccountId = userId;
+            tempEntity.Account = await _unitOfWork.Account.GetById(userId);
+            tempEntity.Product = await _unitOfWork.Product.GetById(dto.ProductId);
 
             //Creating the offer
             await _unitOfWork.Offer.Create(tempEntity);
+        }
+
+        public async Task UpdateOffer(int userId,int offerId, OfferUpsertDto dto)
+        {
+            var tempentity = await _unitOfWork.Offer.GetById(userId);
+            if (tempentity is null)
+            {
+                throw new NotFoundException(nameof(Offer), userId);
+            }
+            if (dto.OfferedPrice != tempentity.OfferedPrice)
+                tempentity.OfferedPrice = dto.OfferedPrice;
+            await _unitOfWork.Offer.Update(tempentity);
         }
 
         //Remove
@@ -83,19 +80,6 @@ namespace PayCore.ProductCatalog.Application.Services
             //Delete it
             await _unitOfWork.Offer.Delete(entity);
         }
-
-        ////Update
-        //public async Task Update(int id, OfferUpsertDto dto)
-        //{
-        //    var tempentity = await _unitOfWork.Offer.GetById(id);
-        //    if (tempentity is null)
-        //    {
-        //        throw new NotFoundException(nameof(Offer), id);
-        //    }
-        //    if (dto.OfferedPrice != tempentity.OfferedPrice)
-        //        tempentity.OfferedPrice = dto.OfferedPrice;
-        //    await _unitOfWork.Offer.Update(tempentity);
-        //}
 
     }
 }

@@ -4,7 +4,6 @@ using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

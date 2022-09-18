@@ -24,6 +24,8 @@ namespace PayCore.ProductCatalog.Persistence.Migrations
                 x.Type(NHibernateUtil.String);
                 x.NotNullable(true);
             });
+            Bag(color => color.Products, map => map.Key(k => k.Column("ColorId")), rel => rel.OneToMany());
+
             Table("color");
         }
     }

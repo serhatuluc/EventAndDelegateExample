@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
 {
-    [Authorize(Roles =Role.Admin)]
+    //[Authorize(Roles =Role.Admin)]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class BrandController:ControllerBase

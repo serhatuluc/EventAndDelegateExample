@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.WebAPI.Controllers
@@ -18,7 +19,7 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             this.productService = offerService;
         }
 
-        [HttpGet("getcategories")]
+        [HttpGet("getproducts")]
         public virtual async Task<IActionResult> GetAll()
         {
             //Fetching objects using service
@@ -26,7 +27,7 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getcategorybyid")]
+        [HttpGet("getproductbyid")]
         public virtual async Task<IActionResult> GetById(int id)
         {
             //Fetching object using service
@@ -34,21 +35,23 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("createcategory")]
+        [HttpPost("createproduct")]
         public virtual async Task<IActionResult> Create([FromBody] ProductUpsertDto dto)
         {
-            await productService.Insert(dto);
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await productService.InsertProduct(accountId, dto);
             return Ok();
         }
 
-        [HttpPut("updatecategory")]
-        public virtual async Task<IActionResult> Update(int id, [FromBody] ProductUpsertDto dto)
+        [HttpPut("updateproduct")]
+        public virtual async Task<IActionResult> Update([FromBody] ProductUpsertDto dto)
         {
-            await productService.Update(id, dto);
+            //var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            //await productService.Insert(accountId, dto);
             return Ok();
         }
 
-        [HttpDelete("deletecategory")]
+        [HttpDelete("deleteproduct")]
         public virtual async Task<IActionResult> Delete(int id)
         {
             await productService.Remove(id);

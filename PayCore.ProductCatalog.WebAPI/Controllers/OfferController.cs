@@ -19,20 +19,14 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             this.offerService = offerService;
         }
 
-        [HttpGet("getoffersforuser")]
+        [HttpGet("getoffersofuser")]
         public virtual async Task<IActionResult> GetAll()
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
-            var result = await offerService.GetOffersForUser(accountId);
+            var result = await offerService.GetOffersofUser(accountId);
             return Ok(result);
         }
 
-        //[HttpGet("getoffersbyid")]
-        //public virtual async Task<IActionResult> GetById(int id)
-        //{
-        //    var result = await offerService.GetById(id);
-        //    return Ok(result);
-        //}
 
         [HttpPost("offeronproduct")]
         public virtual async Task<IActionResult> Create([FromBody] OfferUpsertDto dto)
@@ -42,12 +36,13 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             return Ok();
         }
 
-        //[HttpPut("updateoffer")]
-        //public virtual async Task<IActionResult> Update(int id, [FromBody] OfferUpsertDto dto)
-        //{
-        //    await offerService.Update(id, dto);
-        //    return Ok();
-        //}
+        [HttpPut("updateoffer")]
+        public virtual async Task<IActionResult> Update(int productId, [FromBody] OfferUpsertDto dto)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await offerService.UpdateOffer(accountId,productId, dto);
+            return Ok();
+        }
 
         [HttpDelete("withdrawoffer")]
         public virtual async Task<IActionResult> Delete(int offerId)

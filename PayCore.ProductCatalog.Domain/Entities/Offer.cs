@@ -6,7 +6,9 @@ namespace PayCore.ProductCatalog.Domain.Entities
     {
         public virtual bool IsApproved { get; set; } = false;
         public virtual int OfferedPrice { get; set; }
+        public virtual Product Product { get; set; }
         public virtual int ProductId { get; set; }
+        public virtual Account Account { get; set; }
         public virtual int AccountId { get; set; }
     }
 }

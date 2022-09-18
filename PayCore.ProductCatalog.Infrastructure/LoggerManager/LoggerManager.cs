@@ -1,14 +1,21 @@
-﻿
-using NLog;
+﻿using Serilog;
 using PayCore.ProductCatalog.Application.Interfaces.Log;
 using System;
+using Serilog.Events;
 
 namespace PayCore.ProductCatalog.Infrastructure
 {
     public class LoggerManager : ILoggerManager
     {
-        private static ILogger logger = LogManager.GetCurrentClassLogger();
-        public LoggerManager() { }
+        //It will log to a file is placed to webAPI solution 
+        private static ILogger logger = Log.Logger = new LoggerConfiguration()
+             .WriteTo.File(
+                 path: "logs\\log-.txt",
+                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                 rollingInterval: RollingInterval.Day,
+                 restrictedToMinimumLevel: LogEventLevel.Information
+             ).CreateLogger();
+
         public void LogDebug(Exception ex,string message)
         {
             logger.Debug(ex,message);
@@ -20,11 +27,11 @@ namespace PayCore.ProductCatalog.Infrastructure
 
         public void LogInfo(Exception ex,string message)
         {
-            logger.Info(ex,message);
+            logger.Information(ex,message);
         }
         public void LogWarn(Exception ex,string message)
         {
-            logger.Warn(ex,message);
+            logger.Warning(ex,message);
         }
     }
 }
