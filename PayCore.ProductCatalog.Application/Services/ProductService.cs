@@ -166,5 +166,23 @@ namespace PayCore.ProductCatalog.Application.Services
             await _unitOfWork.Offer.Update(tempentity);
         }
 
+
+        public async Task BuyProductWithoutOffer(int userId, int productId)
+        {
+            var entity = await _unitOfWork.Product.GetById(productId);
+
+            if (entity.Account.Id == userId)
+            {
+                throw new BadRequestException("Product belongs to user");
+            }
+
+            if (entity is null)
+            {
+                throw new NotFoundException(nameof(Product), productId);
+            }
+
+            entity.IsSold = true;
+            await _unitOfWork.Product.Update(entity);
+        }
     }
 }

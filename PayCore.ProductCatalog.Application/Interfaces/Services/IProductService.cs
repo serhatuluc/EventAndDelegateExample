@@ -20,5 +20,8 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
 
         //Update product
         Task Update(int productId, int userId, ProductUpsertDto dto);
+
+        //Buy without offering
+        Task BuyProductWithoutOffer(int userId, int productId);
     }
 }

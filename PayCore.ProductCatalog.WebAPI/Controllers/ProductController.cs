@@ -44,18 +44,26 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         }
 
         [HttpPut("updateproduct")]
-        public virtual async Task<IActionResult> Update([FromBody] ProductUpsertDto dto)
+        public virtual async Task<IActionResult> Update(int productId,[FromBody] ProductUpsertDto dto)
         {
-            //var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
-            //await productService.Insert(accountId, dto);
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await productService.Update(productId,accountId, dto);
             return Ok();
         }
 
         [HttpDelete("deleteproduct")]
-        public virtual async Task<IActionResult> Delete(int id)
+        public virtual async Task<IActionResult> Delete(int productId)
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
-            await productService.Remove(id,accountId);
+            await productService.Remove(productId,accountId);
+            return Ok();
+        }
+
+        [HttpPut]
+        public virtual async Task<IActionResult> BuyProductWithoutOffer(int productId)
+        {
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await productService.Remove(productId, accountId);
             return Ok();
         }
     }

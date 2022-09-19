@@ -21,17 +21,15 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task<List<OfferViewDto>> GetOffersofUser(int userId);
 
         //Disapprove offer
-        Task DisapproveOffer(int offerId,int userId);
+        Task DisapproveOffer(int userId,int offerId);
 
         //Approve offer
-        Task ApproveOffer(int offerId, int userId);
+        Task ApproveOffer(int userId,int offerId);
 
         //Get offers has been made to product belongs to user
         Task<IList<OfferViewDto>> GetOffersToUser(int userId);
 
-        //Buy without offering
-        Task BuyProductWithoutOffer(int productId, int userId);
-
+        
 
     }
 }

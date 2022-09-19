@@ -45,7 +45,7 @@ namespace PayCore.ProductCatalog.Application.Services
 
        
 
-        public async Task DisapproveOffer(int id, int userId)
+        public async Task DisapproveOffer(int userId,int id)
         {
             //It fetches offers to user
             var offers = await _unitOfWork.Offer.GetOfferstoUser(userId);
@@ -205,22 +205,5 @@ namespace PayCore.ProductCatalog.Application.Services
         }
 
 
-        public async Task BuyProductWithoutOffer(int productId, int userId)
-        {
-            var entity = await _unitOfWork.Product.GetById(productId);
-
-            if(entity.Account.Id == userId)
-            {
-                throw new BadRequestException("Product belongs to user");
-            }
-
-            if(entity is null)
-            {
-                throw new NotFoundException(nameof(Product), productId);
-            }
-
-            entity.IsSold = true;
-            await _unitOfWork.Product.Update(entity);
-        }
     }
 }

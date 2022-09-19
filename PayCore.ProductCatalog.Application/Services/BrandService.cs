@@ -5,6 +5,7 @@ using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.Application.Services
@@ -63,11 +64,12 @@ namespace PayCore.ProductCatalog.Application.Services
 
             //Custom exception is thrown if the object which is requested to be
             //deleted has reference to other table
-            if(unitOfWork.Product.GetAll(x=>x.Brand.Id == id) is not null)
+            var products = await unitOfWork.Product.GetAll(x => x.Brand.Id == id);
+            var product = products.Count();
+            if (product != 0)
             {
                 throw new InvalidRequestException(nameof(Product), id);
             }
-            
             await unitOfWork.Brand.Delete(entity);
         }
 

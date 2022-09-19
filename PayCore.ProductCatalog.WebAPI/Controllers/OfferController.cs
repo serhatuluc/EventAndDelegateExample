@@ -45,10 +45,10 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         }
 
         [HttpPut("updateoffer")]
-        public virtual async Task<IActionResult> Update(int productId, [FromBody] OfferUpsertDto dto)
+        public virtual async Task<IActionResult> Update(int offerId, [FromBody] OfferUpsertDto dto)
         {
             var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
-            await offerService.UpdateOffer(accountId,productId, dto);
+            await offerService.UpdateOffer(accountId,offerId, dto);
             return Ok();
         }
 
@@ -75,5 +75,6 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
             await offerService.DisapproveOffer(accountId, offerId);
             return Ok();
         }
+
     }
 }

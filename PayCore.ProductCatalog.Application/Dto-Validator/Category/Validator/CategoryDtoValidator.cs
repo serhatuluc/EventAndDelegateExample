@@ -3,7 +3,7 @@
 
 namespace PayCore.ProductCatalog.Application.Dto_Validator
 {
-    class CategoryDtoValidator : AbstractValidator<CategoryUpsertDto>
+    public class CategoryDtoValidator : AbstractValidator<CategoryUpsertDto>
     {
         public CategoryDtoValidator()
         {
