@@ -13,12 +13,12 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task<ProductViewDto> GetById(int id);
 
         //Insert offerable Product 
-        Task InsertOfferableProduct(int userId,ProductUpsertDto dto);
+        Task InsertProduct(int userId,ProductUpsertDto dto);
 
         //Remove product
-        Task Remove(int userId,int id);
+        Task Remove(int productId,int userId);
 
         //Update product
-        Task Update(int userId,int id, ProductUpsertDto dto);
+        Task Update(int productId, int userId, ProductUpsertDto dto);
     }
 }

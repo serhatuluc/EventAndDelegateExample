@@ -54,7 +54,8 @@ namespace PayCore.ProductCatalog.WebAPI.Controllers
         [HttpDelete("deleteproduct")]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            await productService.Remove(id);
+            var accountId = int.Parse((User.Identity as ClaimsIdentity).FindFirst("AccountId").Value);
+            await productService.Remove(id,accountId);
             return Ok();
         }
     }

@@ -1,6 +1,4 @@
 ﻿using PayCore.ProductCatalog.Application.Dto_Validator.Product.Dto;
-using PayCore.ProductCatalog.Domain.Entities;
-using System;
 
 
 namespace PayCore.ProducCatalog.Application.Dto_Validator

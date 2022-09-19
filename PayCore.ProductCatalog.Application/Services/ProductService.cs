@@ -24,8 +24,33 @@ namespace PayCore.ProductCatalog.Application.Services
         //GetAll
         public async Task<IEnumerable<ProductViewDto>> GetAll()
         {
-            var tempEntity = await _unitOfWork.Product.GetAll();
-            var result = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewDto>>(tempEntity);
+            var listProduct = await _unitOfWork.Product.GetAll();
+
+            var result = new List<ProductViewDto>();
+
+
+            using (var sequenceEnum = listProduct.GetEnumerator())
+            {
+                while (sequenceEnum.MoveNext())
+                {
+                    //Mapping to view model 
+                    //Automapper is not preferred to be used here. Since this kind of mapping needs to be more distinct
+                    var productView = new ProductViewDto()
+                    {
+                        Id = sequenceEnum.Current.Id,
+                        ProductName = sequenceEnum.Current.ProductName,
+                        Description = sequenceEnum.Current.Description,
+                        CategoryName = sequenceEnum.Current.Category.CategoryName,
+                        BrandName = sequenceEnum.Current.Brand.BrandName,
+                        ColorName = sequenceEnum.Current.Color.ColorName,
+                        Price = sequenceEnum.Current.Price,
+                        IsSold = sequenceEnum.Current.IsSold,
+                        IsOfferable = sequenceEnum.Current.IsOfferable
+                       
+                    };
+                    result.Add(productView);
+                }
+            }
             return result;
         }
 
@@ -39,7 +64,19 @@ namespace PayCore.ProductCatalog.Application.Services
                 throw new NotFoundException(nameof(Product), id);
             }
 
-            var result = _mapper.Map<Product, ProductViewDto>(entity);
+            var result = new ProductViewDto()
+            {
+                Id = entity.Id,
+                ProductName = entity.ProductName,
+                Description = entity.Description,
+                CategoryName = entity.Category.CategoryName,
+                BrandName = entity.Brand.BrandName,
+                ColorName = entity.Color.ColorName,
+                Price = entity.Price,
+                IsSold = entity.IsSold,
+                IsOfferable = entity.IsOfferable
+
+            };
             return result;
         }
 
@@ -48,50 +85,84 @@ namespace PayCore.ProductCatalog.Application.Services
         {
             var tempEntity = _mapper.Map<ProductUpsertDto, Product>(dto);
 
+            //Category id which is taken from dto is used to assign category to product 
             tempEntity.Category = await _unitOfWork.Category.GetById(dto.CategoryId);
             if (tempEntity.Category is null) 
             {
                 throw new NotFoundException(nameof(Category), dto.CategoryId); 
             }
 
+            //Brand id which is taken from dto is used to assign brand to product 
             tempEntity.Brand = await _unitOfWork.Brand.GetById(dto.BrandId);
             if (tempEntity.Brand is null)
             {
                 throw new NotFoundException(nameof(Category), dto.BrandId);
             }
+
+            //Color id which is taken from dto is used to assign color to product 
             tempEntity.Color = await _unitOfWork.Color.GetById(dto.ColorId);
             if (tempEntity.Color is null)
             {
                 throw new NotFoundException(nameof(Category), dto.ColorId);
             }
 
+            //Account id taken from jwt token is used to assignt the product to account
             tempEntity.Account = await _unitOfWork.Account.GetById(UserId);
             await _unitOfWork.Product.Create(tempEntity);
         }
 
         //Remove
-        public async Task Remove(int id)
+        public async Task Remove(int productId, int userId)
         {
-            var entity = await _unitOfWork.Product.GetById(id);
+            var entity = await _unitOfWork.Product.GetById(productId);
 
             if (entity is null)
             {
-                throw new NotFoundException(nameof(Product), id);
+                throw new NotFoundException(nameof(Product), productId);
             }
 
-            //IsDeleted field of brand is updated to delete. 
-            //Assuming product might have used this brand id. The brand is not deleted from database 
-            await _unitOfWork.Product.Update(entity);
+            if(userId != entity.Account.Id)
+            {
+                throw new BadRequestException("Not allowed");
+            }
+
+            await _unitOfWork.Product.Delete(entity);
         }
 
         //Update
-        public async Task Update(int id, ProductUpsertDto dto)
+        public async Task Update(int productId, int userId,ProductUpsertDto dto)
         {
-            var tempentity = await _unitOfWork.Offer.GetById(id);
+            var tempentity = await _unitOfWork.Offer.GetById(productId);
             if (tempentity is null)
             {
-                throw new NotFoundException(nameof(Product), id);
+                throw new NotFoundException(nameof(Product), productId);
             }
+
+            var tempEntity = _mapper.Map<ProductUpsertDto, Product>(dto);
+
+            //Category id which is taken from dto is used to assign category to product 
+            tempEntity.Category = await _unitOfWork.Category.GetById(dto.CategoryId);
+            if (tempEntity.Category is null)
+            {
+                throw new NotFoundException(nameof(Category), dto.CategoryId);
+            }
+
+            //Brand id which is taken from dto is used to assign brand to product 
+            tempEntity.Brand = await _unitOfWork.Brand.GetById(dto.BrandId);
+            if (tempEntity.Brand is null)
+            {
+                throw new NotFoundException(nameof(Category), dto.BrandId);
+            }
+
+            //Color id which is taken from dto is used to assign color to product 
+            tempEntity.Color = await _unitOfWork.Color.GetById(dto.ColorId);
+            if (tempEntity.Color is null)
+            {
+                throw new NotFoundException(nameof(Category), dto.ColorId);
+            }
+
+            //Account id taken from jwt token is used to assignt the product to account
+            tempEntity.Account = await _unitOfWork.Account.GetById(userId);
             await _unitOfWork.Offer.Update(tempentity);
         }
 
