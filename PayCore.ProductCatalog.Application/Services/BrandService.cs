@@ -63,7 +63,7 @@ namespace PayCore.ProductCatalog.Application.Services
 
             //Custom exception is thrown if the object which is requested to be
             //deleted has reference to other table
-            if(unitOfWork.Product.GetAll(x=>x.BrandId == id) is not null)
+            if(unitOfWork.Product.GetAll(x=>x.Brand.Id == id) is not null)
             {
                 throw new InvalidRequestException(nameof(Product), id);
             }

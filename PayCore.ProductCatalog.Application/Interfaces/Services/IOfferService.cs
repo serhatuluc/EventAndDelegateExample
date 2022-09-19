@@ -30,7 +30,7 @@ namespace PayCore.ProductCatalog.Application.Interfaces.Services
         Task<IList<OfferViewDto>> GetOffersToUser(int userId);
 
         //Buy without offering
-        Task BuyProductWithoutOffer(int offerId, int userId);
+        Task BuyProductWithoutOffer(int productId, int userId);
 
 
     }

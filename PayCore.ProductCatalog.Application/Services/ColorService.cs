@@ -4,10 +4,7 @@ using PayCore.ProductCatalog.Application.Dto_Validator;
 using PayCore.ProductCatalog.Application.Interfaces.Services;
 using PayCore.ProductCatalog.Application.Interfaces.UnitOfWork;
 using PayCore.ProductCatalog.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PayCore.ProductCatalog.Application.Services
@@ -66,7 +63,7 @@ namespace PayCore.ProductCatalog.Application.Services
 
             //Custom exception is thrown if the object which is requested to be
             //deleted has reference to other table
-            if (_unitOfWork.Product.GetAll(x => x.BrandId == id) is not null)
+            if (_unitOfWork.Product.GetAll(x => x.Brand.Id == id) is not null)
             {
                 throw new InvalidRequestException(nameof(Product), id);
             }

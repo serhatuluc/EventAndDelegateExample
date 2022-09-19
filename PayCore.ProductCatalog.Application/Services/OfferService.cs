@@ -191,7 +191,7 @@ namespace PayCore.ProductCatalog.Application.Services
             var entity = await _unitOfWork.Offer.GetById(offerId);
 
             //If user tries to use offer doesnt to belong to him/her
-            if(entity.AccountId != UserId)
+            if(entity.Account.Id != UserId)
             {
                 throw new BadRequestException("Offer could not be found");
             }
@@ -205,9 +205,22 @@ namespace PayCore.ProductCatalog.Application.Services
         }
 
 
-        public Task BuyProductWithoutOffer(int offerId, int userId)
+        public async Task BuyProductWithoutOffer(int productId, int userId)
         {
-            throw new System.NotImplementedException();
+            var entity = await _unitOfWork.Product.GetById(productId);
+
+            if(entity.Account.Id == userId)
+            {
+                throw new BadRequestException("Product belongs to user");
+            }
+
+            if(entity is null)
+            {
+                throw new NotFoundException(nameof(Product), productId);
+            }
+
+            entity.IsSold = true;
+            await _unitOfWork.Product.Update(entity);
         }
     }
 }
