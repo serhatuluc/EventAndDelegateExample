@@ -1,0 +1,15 @@
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.csproj.AssemblyReference.cache
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.AssemblyInfoInputs.cache
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.AssemblyInfo.cs
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.csproj.CoreCompileInputs.cache
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\bin\Debug\net6.0\EventsAndDelegates.exe
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\bin\Debug\net6.0\EventsAndDelegates.deps.json
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\bin\Debug\net6.0\EventsAndDelegates.runtimeconfig.json
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\bin\Debug\net6.0\EventsAndDelegates.dll
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\bin\Debug\net6.0\EventsAndDelegates.pdb
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.dll
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\refint\EventsAndDelegates.dll
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.pdb
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\EventsAndDelegates.genruntimeconfig.cache
+C:\Users\serhat.uluc\Documents\MyDocuments\SocketProgramming\EventsAndDelegates\EventsAndDelegates\obj\Debug\net6.0\ref\EventsAndDelegates.dll
